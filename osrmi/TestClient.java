@@ -1,10 +1,18 @@
+import javax.swing.*;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;TestClient main()
+import java.rmi.RemoteException;
+
 public class TestClient {
-    private static ITestInterface lookup;
+    private static IOneInterface lookup;
+
     public static void main(String args[]) throws RemoteException, NotBoundException, MalformedURLException {
-        Naming.rebind((name:"//localhost:5005/myObject", new TestServer()));
+        lookup = (IOneInterface) Naming.lookup("//localhost:5005/hello");
+
+        String name = JOptionPane.showInputDialog("Enter name");
+
+        String response = lookup.sayHello(name);
+        JOptionPane.showConfirmDialog(null, response);
     }
 }
